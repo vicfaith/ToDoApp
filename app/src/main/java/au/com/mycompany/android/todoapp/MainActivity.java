@@ -18,6 +18,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+/**
+ * https://cloud.google.com/solutions/mobile/firebase-app-engine-android-studio#writing_the_servlet_code
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
