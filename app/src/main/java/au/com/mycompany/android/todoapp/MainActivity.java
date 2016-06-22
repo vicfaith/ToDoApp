@@ -1,11 +1,14 @@
 package au.com.mycompany.android.todoapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.addButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                hideIME(MainActivity.this);
                 new Firebase("https://my-first-app-4597d.firebaseio.com/todoItems")
                         .push()
                         .child("text")
                         .setValue(text.getText().toString());
+                text.setText(null);
             }
         });
 
@@ -126,5 +131,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideIME(Activity context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View v = context.getWindow().getCurrentFocus();
+        if (v instanceof EditText) {
+            v.clearFocus();
+        }
+        imm.hideSoftInputFromWindow(context.getWindow().getDecorView().getWindowToken(), 0);
     }
 }
